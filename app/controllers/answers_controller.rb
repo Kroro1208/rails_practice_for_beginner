@@ -21,6 +21,25 @@ class AnswersController < ApplicationController
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
+  def edit
+    @answer = Answer.find(params[:id])
+    @question = @answer.question
+    unless current_user.mine?(@answer)
+    end
+  end
+
+  def update
+    @question = Question.find(params[:question_id])
+    @answer = Answer.find(params[:id])
+    
+
+    if @answer.update(answer_params)
+      redirect_to question_path(@question), success: '回答を更新しました'
+    else
+      render :edit
+    end
+  end
+
   def destroy
     @answer = current_user.answers.find(params[:id])
     @answer.destroy!
