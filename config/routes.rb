@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: 'questions#index'
-   #resources :users
+  # resources :users
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     resources :answers, only: [:create, :edit, :update, :destroy]
   end
 
-  resources :users, only: [:index, :edit, :update]
+  resources :users, only: [:new, :create, :index, :show, :edit, :update]
 
   namespace :admin do
     get 'login', to: 'sessions#new'

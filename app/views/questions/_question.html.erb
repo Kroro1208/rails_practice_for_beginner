@@ -6,7 +6,7 @@
       <div class="mr-3">
       <% if question.solved? %>
         <span class="badge badge-success">解決済み</span>
-      <% else %>
+      <% elsif !question.solved? %>
         <span class="badge badge-danger">未解決</span>
       <% end %>
       </div>
@@ -21,3 +21,4 @@
     <%= question.body.truncate(100) %>
   </div>
 </li>
+
