@@ -22,35 +22,23 @@ class UsersController < ApplicationController
   end
 
   def show
-    if params[:id] != 'new'
       @user = User.find(params[:id])
-    else
-      redirect_to new_user_path
-    end
   end
 
   def update
-    @user = User.find(params[:id])
-    # パスワードが6桁より少ない場合のエラー処理
-    if user_params[:password].present? && user_params[:password].length < 6
-      Rails.logger.error(@user.errors.full_messages)
-      flash.now[:danger] = 'パスワードは6桁で設定してね！'
-      render :edit
+    @user = current_user
+    if @user.update(user_params)
+      redirect_to user_path(@user), success: "更新に成功しました"
     else
-      # パスワードが6桁以上の場合、通常の更新処理を実行
-      if @user.update(user_params)
-        redirect_to root_path, success: 'ユーザー情報を更新しました'
-      else
-        # Rails.logger.error(@user.errors.full_messages)
-        flash.now[:danger] = '更新に失敗しました'
-        render :edit
-      end
+      flash.now[:danger] = "更新に失敗しました"
+      render :edit
     end
   end
+  
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :profile_description, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :profile_description)
   end
 end
