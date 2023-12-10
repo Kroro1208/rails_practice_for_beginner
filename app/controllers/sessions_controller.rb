@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   def new; end
 
   def create
-    user = User.find_by(email: params[:email])
+    user = User.find_by(email: params[:login_identifier]) || User.find_by(name: params[:login_identifier])
     if user.present? && user.authenticate(params[:password])
       session[:user_id] = user.id
       redirect_to questions_path, success: 'ログインしました'
@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
       flash.now[:danger] = 'ログインに失敗しました'
       render :new
     end
+    
   end
 
   def destroy
