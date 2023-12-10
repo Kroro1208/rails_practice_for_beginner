@@ -1,0 +1,25 @@
+<h2>プロフィール詳細</h2>
+
+<div>
+  <%= image_tag 'https://placehold.jp/64x64.png', class: 'mr-3 rounded-circle' %>
+</div>
+
+<div class="form-group">
+  <%= "名前"%><br>
+  <%= label_tag '名前', @user.name %>
+</div>
+
+<div class="form-group">
+<%= "email"%><br>
+  <%= label_tag 'メールアドレス', @user.email %>
+</div>
+
+<div class="form-group">
+<%= "自己紹介"%><br>
+  <%= label_tag 'プロフィール', @user.profile_description %>
+</div>
+
+<%# 編集ボタン %>
+<%= link_to '編集する', edit_user_path(@user), class: 'btn btn-primary' %>
+
+<%= link_to '戻る', root_path %>
